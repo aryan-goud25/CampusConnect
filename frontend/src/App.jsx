@@ -36,7 +36,7 @@ function App() {
           element={<OrganizerScanner />}
         />
         <Route
-          path="/organizer-analytics"
+          path="/analytics"
           element={<Analytics />}
         />
       </Routes>
