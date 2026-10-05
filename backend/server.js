@@ -5,7 +5,7 @@ require("dotenv").config();
 const dns = require("node:dns");
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
-const bookmarkRoutes = require("./routes/bookmarkRoutes");
+const bookmarkRoutes = require("./routes/bookMarkRoutes");
 const authRoutes = require("./routes/authRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const registrationRoutes = require("./routes/registrationRoutes");
