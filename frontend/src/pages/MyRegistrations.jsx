@@ -15,7 +15,7 @@ export default function MyRegistrations() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "http://localhost:5000/api/registrations/my",
+          "https://campusconnect-backend-r9m6.onrender.com/api/registrations/my",
           {
             headers: {
               Authorization: `Bearer ${token}`,

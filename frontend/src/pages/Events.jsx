@@ -24,7 +24,7 @@ function Events() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/events"
+          "https://campusconnect-backend-r9m6.onrender.com/api/events"
         );
         setEvents(response.data);
 
@@ -36,7 +36,7 @@ function Events() {
         if (user?.role === "student" && token) {
           try {
             const interestResponse = await axios.get(
-              "http://localhost:5000/api/interests",
+              "https://campusconnect-backend-r9m6.onrender.com/api/interests",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,

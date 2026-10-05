@@ -26,7 +26,7 @@ function Analytics() {
       }
 
       const response = await axios.get(
-        "http://localhost:5000/api/analytics/organizer",
+        "https://campusconnect-backend-r9m6.onrender.com/api/analytics/organizer",
         {
           headers: {
             Authorization: `Bearer ${token}`,

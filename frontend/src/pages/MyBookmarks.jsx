@@ -21,7 +21,7 @@ function MyBookmarks() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/bookmarks/my",
+          "https://campusconnect-backend-r9m6.onrender.com/api/bookmarks/my",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -43,7 +43,7 @@ function MyBookmarks() {
   const handleRemove = async (eventId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/bookmarks/${eventId}`,
+        `https://campusconnect-backend-r9m6.onrender.com/api/bookmarks/${eventId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

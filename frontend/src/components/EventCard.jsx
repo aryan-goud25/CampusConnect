@@ -24,7 +24,7 @@ function EventCard({ event }) {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/bookmarks/my",
+          "https://campusconnect-backend-r9m6.onrender.com/api/bookmarks/my",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -51,7 +51,7 @@ function EventCard({ event }) {
     try {
       if (isBookmarked) {
         await axios.delete(
-          `http://localhost:5000/api/bookmarks/${event._id}`,
+          `https://campusconnect-backend-r9m6.onrender.com/api/bookmarks/${event._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -59,7 +59,7 @@ function EventCard({ event }) {
         setIsBookmarked(false);
       } else {
         await axios.post(
-          `http://localhost:5000/api/bookmarks/${event._id}`,
+          `https://campusconnect-backend-r9m6.onrender.com/api/bookmarks/${event._id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

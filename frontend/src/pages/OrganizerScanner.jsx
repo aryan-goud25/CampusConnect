@@ -35,7 +35,7 @@ export default function OrganizerScanner() {
         const token = localStorage.getItem("token");
 
         const response = await axios.post(
-          "http://localhost:5000/api/registrations/verify",
+          "https://campusconnect-backend-r9m6.onrender.com/api/registrations/verify",
           { qrToken: decodedText },
           {
             headers: {

@@ -49,7 +49,7 @@ export default function InterestSelection() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/interests",
+          "https://campusconnect-backend-r9m6.onrender.com/api/interests",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ export default function InterestSelection() {
 
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/interests",
+        "https://campusconnect-backend-r9m6.onrender.com/api/interests",
         { interests: selected },
         {
           headers: {

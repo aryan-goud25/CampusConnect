@@ -27,7 +27,7 @@ function EventDetails() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/events/${id}`
+          `https://campusconnect-backend-r9m6.onrender.com/api/events/${id}`
         );
 
         setEvent(response.data);
@@ -45,7 +45,7 @@ function EventDetails() {
 
         if (currentToken && currentUser?.role === "student") {
           const registrationResponse = await axios.get(
-            "http://localhost:5000/api/registrations/my",
+            "https://campusconnect-backend-r9m6.onrender.com/api/registrations/my",
             {
               headers: {
                 Authorization: `Bearer ${currentToken}`,
@@ -89,7 +89,7 @@ function EventDetails() {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/registrations/${id}`,
+        `https://campusconnect-backend-r9m6.onrender.com/api/registrations/${id}`,
         {},
         {
           headers: {

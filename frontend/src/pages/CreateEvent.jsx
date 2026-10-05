@@ -34,7 +34,7 @@ function CreateEvent() {
       const token = localStorage.getItem("token")
 
       await axios.post(
-        "http://localhost:5000/api/events",
+        "https://campusconnect-backend-r9m6.onrender.com/api/events",
         {
           ...form,
           date: new Date(form.date).toISOString(),

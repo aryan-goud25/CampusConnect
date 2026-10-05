@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = "http://localhost:5000/api/events";
+const API = "https://campusconnect-backend-r9m6.onrender.com/api/events";
 
 export default function AdminDashboard() {
   const [events, setEvents] = useState([]);
