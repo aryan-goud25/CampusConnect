@@ -16,14 +16,12 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-const allowedOrigins =
-  process.env.NODE_ENV === "production"
-    ? [process.env.FRONTEND_URL].filter(Boolean)
-    : [
-        "http://localhost:5173",
-        "http://localhost:5174",
-        process.env.FRONTEND_URL,
-      ].filter(Boolean);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://campus-connect-orpin-six.vercel.app",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
 
 app.use(
   cors({
