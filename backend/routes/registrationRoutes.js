@@ -1,4 +1,3 @@
-
 const express = require("express");
 const crypto = require("crypto");
 const router = express.Router();
@@ -138,5 +137,51 @@ router.post("/:eventId", protect, authorize("student"), async (req, res) => {
     });
   }
 });
+
+// Cancel a student's registration
+router.patch(
+  "/:registrationId/cancel",
+  protect,
+  authorize("student"),
+  async (req, res) => {
+    try {
+      const registration = await Registration.findOne({
+        _id: req.params.registrationId,
+        student: req.user.id,
+      }).populate("event");
+
+      if (!registration) {
+        return res.status(404).json({
+          message: "Registration not found.",
+        });
+      }
+
+      if (registration.status === "cancelled") {
+        return res.status(400).json({
+          message: "This registration is already cancelled.",
+        });
+      }
+
+      if (registration.status === "attended") {
+        return res.status(400).json({
+          message: "You cannot cancel a registration after attendance is marked.",
+        });
+      }
+
+      registration.status = "cancelled";
+      await registration.save();
+
+      return res.status(200).json({
+        message: "Registration cancelled successfully.",
+        registration,
+      });
+    } catch (error) {
+      console.error("Cancellation error:", error);
+      return res.status(500).json({
+        message: "Unable to cancel registration.",
+      });
+    }
+  }
+);
 
 module.exports = router;
