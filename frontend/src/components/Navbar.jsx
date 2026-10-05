@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CalendarDays, Menu, X } from "lucide-react";
@@ -45,6 +44,7 @@ function Navbar() {
             Explore Events
           </Link>
 
+          {/* Student Links */}
           {user?.role === "student" && (
             <>
               <Link to="/interests" className={linkClass}>
@@ -61,11 +61,16 @@ function Navbar() {
             </>
           )}
 
+          {/* Organizer/Admin Links */}
           {user &&
             (user.role === "organizer" || user.role === "admin") && (
               <>
                 <Link to="/create-event" className={linkClass}>
                   Create Event
+                </Link>
+
+                <Link to="/analytics" className={linkClass}>
+                  Analytics
                 </Link>
 
                 <Link
@@ -77,6 +82,7 @@ function Navbar() {
               </>
             )}
 
+          {/* Admin Links */}
           {user?.role === "admin" && (
             <Link
               to="/admin-dashboard"
@@ -86,6 +92,7 @@ function Navbar() {
             </Link>
           )}
 
+          {/* Authentication */}
           {user ? (
             <button
               onClick={handleLogout}
@@ -143,6 +150,7 @@ function Navbar() {
               Explore Events
             </Link>
 
+            {/* Student Links */}
             {user?.role === "student" && (
               <>
                 <Link
@@ -171,6 +179,7 @@ function Navbar() {
               </>
             )}
 
+            {/* Organizer/Admin Links */}
             {user &&
               (user.role === "organizer" || user.role === "admin") && (
                 <>
@@ -183,6 +192,14 @@ function Navbar() {
                   </Link>
 
                   <Link
+                    to="/analytics"
+                    onClick={closeMenu}
+                    className={mobileLinkClass}
+                  >
+                    Analytics
+                  </Link>
+
+                  <Link
                     to="/organizer-scanner"
                     onClick={closeMenu}
                     className={mobileLinkClass}
@@ -192,6 +209,7 @@ function Navbar() {
                 </>
               )}
 
+            {/* Admin Links */}
             {user?.role === "admin" && (
               <Link
                 to="/admin-dashboard"
@@ -202,6 +220,7 @@ function Navbar() {
               </Link>
             )}
 
+            {/* Authentication */}
             <div className="mt-2 flex flex-col gap-2 border-t pt-3">
               {user ? (
                 <button
