@@ -57,7 +57,7 @@ router.get(
 router.post(
   "/",
   protect,
-  authorize("organizer", "admin"),
+  authorize("organizer"),
   async (req, res) => {
     try {
       const {
