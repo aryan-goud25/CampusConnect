@@ -26,9 +26,11 @@ function Navbar() {
   return (
     <nav className="w-full border-b bg-white shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
+
         {/* Logo */}
         <Link to="/" onClick={closeMenu} className="flex items-center gap-2">
           <CalendarDays className="h-7 w-7 shrink-0 text-blue-600 sm:h-8 sm:w-8" />
+
           <span className="text-xl font-bold text-gray-900 sm:text-2xl">
             Campus<span className="text-blue-600">Connect</span>
           </span>
@@ -36,6 +38,7 @@ function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-5 md:flex lg:gap-6">
+
           <Link to="/" className={linkClass}>
             Home
           </Link>
@@ -61,35 +64,40 @@ function Navbar() {
             </>
           )}
 
-          {/* Organizer/Admin Links */}
-          {user &&
-            (user.role === "organizer" || user.role === "admin") && (
-              <>
-                <Link to="/create-event" className={linkClass}>
-                  Create Event
-                </Link>
+          {/* Organizer Links */}
+          {user?.role === "organizer" && (
+            <>
+              <Link to="/create-event" className={linkClass}>
+                Create Event
+              </Link>
 
-                <Link to="/analytics" className={linkClass}>
-                  Analytics
-                </Link>
+              <Link to="/analytics" className={linkClass}>
+                Analytics
+              </Link>
 
-                <Link
-                  to="/organizer-scanner"
-                  className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
-                >
-                  QR Scanner
-                </Link>
-              </>
-            )}
+              <Link
+                to="/organizer-scanner"
+                className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
+              >
+                QR Scanner
+              </Link>
+            </>
+          )}
 
           {/* Admin Links */}
           {user?.role === "admin" && (
-            <Link
-              to="/admin-dashboard"
-              className="font-semibold text-purple-700 transition-colors hover:text-purple-900"
-            >
-              Admin Dashboard
-            </Link>
+            <>
+              <Link to="/analytics" className={linkClass}>
+                Analytics
+              </Link>
+
+              <Link
+                to="/admin-dashboard"
+                className="font-semibold text-purple-700 transition-colors hover:text-purple-900"
+              >
+                Admin Dashboard
+              </Link>
+            </>
           )}
 
           {/* Authentication */}
@@ -138,7 +146,12 @@ function Navbar() {
       {menuOpen && (
         <div className="border-t bg-white px-4 py-3 shadow-md md:hidden">
           <div className="flex flex-col gap-1">
-            <Link to="/" onClick={closeMenu} className={mobileLinkClass}>
+
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className={mobileLinkClass}
+            >
               Home
             </Link>
 
@@ -179,45 +192,54 @@ function Navbar() {
               </>
             )}
 
-            {/* Organizer/Admin Links */}
-            {user &&
-              (user.role === "organizer" || user.role === "admin") && (
-                <>
-                  <Link
-                    to="/create-event"
-                    onClick={closeMenu}
-                    className={mobileLinkClass}
-                  >
-                    Create Event
-                  </Link>
+            {/* Organizer Links */}
+            {user?.role === "organizer" && (
+              <>
+                <Link
+                  to="/create-event"
+                  onClick={closeMenu}
+                  className={mobileLinkClass}
+                >
+                  Create Event
+                </Link>
 
-                  <Link
-                    to="/analytics"
-                    onClick={closeMenu}
-                    className={mobileLinkClass}
-                  >
-                    Analytics
-                  </Link>
+                <Link
+                  to="/analytics"
+                  onClick={closeMenu}
+                  className={mobileLinkClass}
+                >
+                  Analytics
+                </Link>
 
-                  <Link
-                    to="/organizer-scanner"
-                    onClick={closeMenu}
-                    className={mobileLinkClass}
-                  >
-                    QR Scanner
-                  </Link>
-                </>
-              )}
+                <Link
+                  to="/organizer-scanner"
+                  onClick={closeMenu}
+                  className={mobileLinkClass}
+                >
+                  QR Scanner
+                </Link>
+              </>
+            )}
 
             {/* Admin Links */}
             {user?.role === "admin" && (
-              <Link
-                to="/admin-dashboard"
-                onClick={closeMenu}
-                className={mobileLinkClass}
-              >
-                Admin Dashboard
-              </Link>
+              <>
+                <Link
+                  to="/analytics"
+                  onClick={closeMenu}
+                  className={mobileLinkClass}
+                >
+                  Analytics
+                </Link>
+
+                <Link
+                  to="/admin-dashboard"
+                  onClick={closeMenu}
+                  className={mobileLinkClass}
+                >
+                  Admin Dashboard
+                </Link>
+              </>
             )}
 
             {/* Authentication */}
