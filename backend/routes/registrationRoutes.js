@@ -24,6 +24,33 @@ router.get("/my", protect, authorize("student"), async (req, res) => {
   }
 });
 
+// Check the logged-in student's registration for one event
+router.get(
+  "/:eventId/status",
+  protect,
+  authorize("student"),
+  async (req, res) => {
+    try {
+      const registration = await Registration.findOne({
+        student: req.user.id,
+        event: req.params.eventId,
+        status: { $in: ["registered", "attended"] },
+      }).select("status");
+
+      return res.status(200).json({
+        registered: Boolean(registration),
+        status: registration?.status || null,
+      });
+    } catch (error) {
+      console.error("Registration status error:", error);
+
+      return res.status(500).json({
+        message: "Unable to check registration status.",
+      });
+    }
+  }
+);
+
 // Verify QR pass and mark attendance
 router.post(
   "/verify",
