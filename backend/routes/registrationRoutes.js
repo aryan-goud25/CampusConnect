@@ -1,3 +1,4 @@
+
 const express = require("express");
 const crypto = require("crypto");
 const router = express.Router();
@@ -6,7 +7,7 @@ const Registration = require("../models/Registration");
 const Event = require("../models/Event");
 const { protect, authorize } = require("../middleware/authMiddleware");
 
-// Get registrations of logged-in student
+// Get registrations of the logged-in student
 router.get("/my", protect, authorize("student"), async (req, res) => {
   try {
     const registrations = await Registration.find({
@@ -15,16 +16,16 @@ router.get("/my", protect, authorize("student"), async (req, res) => {
       .populate("event")
       .sort({ registeredAt: -1 });
 
-    res.status(200).json(registrations);
+    return res.status(200).json(registrations);
   } catch (error) {
     console.error("Fetch registrations error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Unable to fetch your registrations.",
     });
   }
 });
 
-// Check the logged-in student's registration for one event
+// Check registration status for the logged-in student and one event
 router.get(
   "/:eventId/status",
   protect,
@@ -43,7 +44,6 @@ router.get(
       });
     } catch (error) {
       console.error("Registration status error:", error);
-
       return res.status(500).json({
         message: "Unable to check registration status.",
       });
@@ -124,7 +124,7 @@ router.post(
   }
 );
 
-// Register a student for an event
+// Register or re-register a student for an event
 router.post("/:eventId", protect, authorize("student"), async (req, res) => {
   try {
     const event = await Event.findById(req.params.eventId);
@@ -141,6 +141,38 @@ router.post("/:eventId", protect, authorize("student"), async (req, res) => {
       });
     }
 
+    // Look up the existing registration for this student and event.
+    const existingRegistration = await Registration.findOne({
+      student: req.user.id,
+      event: event._id,
+    });
+
+    if (existingRegistration) {
+      // Do not allow duplicate active registrations or re-registration
+      // after attendance has already been recorded.
+      if (
+        existingRegistration.status === "registered" ||
+        existingRegistration.status === "attended"
+      ) {
+        return res.status(409).json({
+          message: "You already have a registration for this event.",
+        });
+      }
+
+      // Reuse a cancelled record to respect the unique student/event index.
+      existingRegistration.status = "registered";
+      existingRegistration.qrToken = crypto.randomBytes(32).toString("hex");
+      existingRegistration.registeredAt = new Date();
+
+      await existingRegistration.save();
+
+      return res.status(200).json({
+        message: "Successfully registered for the event again!",
+        registration: existingRegistration,
+      });
+    }
+
+    // Create a registration only if no record exists.
     const registration = await Registration.create({
       student: req.user.id,
       event: event._id,
@@ -154,7 +186,7 @@ router.post("/:eventId", protect, authorize("student"), async (req, res) => {
   } catch (error) {
     if (error.code === 11000) {
       return res.status(409).json({
-        message: "You are already registered for this event.",
+        message: "You already have a registration for this event.",
       });
     }
 
@@ -175,7 +207,7 @@ router.patch(
       const registration = await Registration.findOne({
         _id: req.params.registrationId,
         student: req.user.id,
-      }).populate("event");
+      });
 
       if (!registration) {
         return res.status(404).json({
@@ -191,7 +223,8 @@ router.patch(
 
       if (registration.status === "attended") {
         return res.status(400).json({
-          message: "You cannot cancel a registration after attendance is marked.",
+          message:
+            "You cannot cancel a registration after attendance is marked.",
         });
       }
 
